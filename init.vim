@@ -7,8 +7,12 @@ call plug#begin()
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'kien/ctrlp.vim'
+  Plug 'nvim-lualine/lualine.nvim'
+  Plug 'kyazdani42/nvim-web-devicons'
+  Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
+set encoding=UTF-8
 set number
 set tabstop=2
 set softtabstop=2
@@ -25,6 +29,7 @@ endif
 set background=dark
 let g:gruvbox_material_background = 'soft'
 let g:gruvbox_material_better_performance = 1
+let g:airline_powerline_fonts = 1
 colorscheme gruvbox-material
 
 " set current directory
@@ -67,3 +72,8 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 " Ctrlp
 let g:ctrlp_mruf_relative = 1
 nmap <C-E> :CtrlPMRU<CR>
+
+" Lualine
+lua << END
+require('lualine').setup()
+END
