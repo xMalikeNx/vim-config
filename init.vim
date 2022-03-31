@@ -4,6 +4,9 @@ call plug#begin()
   Plug 'sainnhe/gruvbox-material'
   Plug 'preservim/nerdtree'
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight' 
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'kien/ctrlp.vim'
 call plug#end()
 
 set number
@@ -54,3 +57,13 @@ let g:NERDTreeWinSize=100
   \ 'coc-git',
   \ ]
 
+" Telescope
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Ctrlp
+let g:ctrlp_mruf_relative = 1
+nmap <C-E> :CtrlPMRU<CR>
