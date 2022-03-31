@@ -1,5 +1,4 @@
 call plug#begin()
-	Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'tpope/vim-fugitive'
   Plug 'sainnhe/gruvbox-material'
   Plug 'preservim/nerdtree'
@@ -10,6 +9,11 @@ call plug#begin()
   Plug 'nvim-lualine/lualine.nvim'
   Plug 'kyazdani42/nvim-web-devicons'
   Plug 'ryanoasis/vim-devicons'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'ms-jpq/coq_nvim'
+  Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+  Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
 call plug#end()
 
 set encoding=UTF-8
@@ -46,22 +50,6 @@ augroup END
 nnoremap <silent> <expr> <leader>nn g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
 let g:NERDTreeWinSize=100
 
-" Coc
- let g:coc_global_extensions = [
-  \ 'coc-snippets',
-  \ 'coc-tsserver',
-  \ 'coc-eslint',
-  \ 'coc-prettier',
-  \ 'coc-json',
-  \ 'coc-yaml',
-  \ 'coc-tslint-plugin',
-  \ 'coc-emmet',
-  \ 'coc-css',
-  \ 'coc-html',
-  \ 'coc-json',
-  \ 'coc-git',
-  \ ]
-
 " Telescope
 " Find files using Telescope command-line sugar.
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
@@ -73,7 +61,14 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 let g:ctrlp_mruf_relative = 1
 nmap <C-E> :CtrlPMRU<CR>
 
-" Lualine
 lua << END
 require('lualine').setup()
+
+local lsp = require "lspconfig"
+local coq = require "coq"
+
+lsp.tsserver.setup{}
+lsp.tsserver.setup(coq.lsp_ensure_capabilities())
+
 END
+let g:coq_settings = { 'auto_start': v:true }
